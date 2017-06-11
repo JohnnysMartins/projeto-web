@@ -31,4 +31,13 @@ class TaskService
     $this->xml->asXML(self::$xmlFile);
   }
 
+  public function getTasksByUserId($userId) {
+    $tasks = [];
+
+    foreach ($this->xml->task as $task) 
+      if($task->user == $userId)
+        $tasks[] = $task;
+
+    return $tasks;
+  }
 }
