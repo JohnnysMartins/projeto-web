@@ -1,16 +1,16 @@
 <?php
-include "Task.php";
+include_once "Task.php";
 
 /**
 * Service para Tarefas;
 */
 class TaskService
 {
-  private static $xmlFile = 'tasks.xml';
+  private static $xmlFile = 'php/tasks.xml';
   private $xml;
 
   function __construct() {
-    loadXmlFromFile();
+    $this->loadXmlFromFile();
   }
 
   private function loadXmlFromFile() {
@@ -23,8 +23,8 @@ class TaskService
     $newTask->title = $tarefa->getTitle();
     $newTask->date = $tarefa->getDate();
 
-    saveXmlAsFile();
-    loadXmlFromFile();
+    $this->saveXmlAsFile();
+    $this->loadXmlFromFile();
   }
 
   private function saveXmlAsFile() {
