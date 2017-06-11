@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Form</title>
-  
-  
-  	  
+
+
+
       <link rel="stylesheet" href="css/style.css">
-	  <script src="js/jquery-3.2.1.min.js"></script>	
-  
+	  <script src="js/jquery-3.2.1.min.js"></script>
+
 </head>
 
 <body>
@@ -36,14 +36,14 @@
 			</div>
 		</div>
 	</div>
-	
+
 <script>
 //Load the Facebook JS SDK
 (function(d){
    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
    if (d.getElementById(id)) {return;}
    js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
+   js.src = "http://connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
  }(document));
 
@@ -51,7 +51,7 @@ window.fbAsyncInit = function() {
   FB.init({
     appId      : '123817468197864',
     xfbml      : true,
-    version    : 'v2.3',
+    version    : 'v2.9',
     status     : true,
     cookie     : true
   });
@@ -73,14 +73,14 @@ window.fbAsyncInit = function() {
     'email',
   ].join(',');
 
-  
+
   function showDetails() {
     FB.api('/me', {fields: fields}, function(details) {
       // Imprime no HTML os dados do usuário
       $('#userdata').html(JSON.stringify(details, null, '\t'));
-      
+
       // Salvar os dados no banco de dados ou verificar se ja existe e carregar dados do usuário.
-      try 
+      try
       {
         $.ajax({
           method: "POST",
@@ -97,7 +97,7 @@ window.fbAsyncInit = function() {
       {
         alert("Pagina inexistente");
       }
-      
+
       $('#fb-login').attr('style', 'display:none;');
     });
   }
@@ -106,7 +106,7 @@ window.fbAsyncInit = function() {
   $('#fb-login').click(function(){
     fbAsyncInit();
     // Tenta fazer o login
-    FB.login(function(response) { 
+    FB.login(function(response) {
       // Se usuário está logado ....
       if(response.authResponse) {
           showDetails();
@@ -115,9 +115,9 @@ window.fbAsyncInit = function() {
   });
 
 };
-</script>	
+</script>
 </body>
-  
-  
+
+
 </body>
 </html>
