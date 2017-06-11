@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  
+  
+  	  
+      <link rel="stylesheet" href="css/style.css">
+	  <script src="js/jquery-3.2.1.min.js"></script>	
+  
+</head>
+
+<body>
+  <body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Login</h1>
+			</div>
+
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="username" id="login-name">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" value="" placeholder="password" id="login-pass">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<a class="btn btn-primary btn-large btn-block" href="#">login</a>
+				<a id="fb-login" class="btn btn-primary btn-large btn-block" href="#">Facebook</a>
+				<a class="login-link" href="#">Lost your password?</a>
+			</div>
+		</div>
+	</div>
+	
+<script>
+//Load the Facebook JS SDK
+(function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+ }(document));
+
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '123817468197864',
+    xfbml      : true,
+    version    : 'v2.3',
+    status     : true,
+    cookie     : true
+  });
+
+  // Tipos de permissão que irá ser pedida ao usuário.
+  var permissions = [
+    'email',
+    'user_birthday',
+  ].join(',');
+
+  // Campos que vão ser retornados após o login ser confirmado
+  var fields = [
+    'id',
+    'name',
+    'first_name',
+    'middle_name',
+    'last_name',
+    'birthday',
+    'email',
+  ].join(',');
+
+  
+  function showDetails() {
+    FB.api('/me', {fields: fields}, function(details) {
+      // Imprime no HTML os dados do usuário
+      $('#userdata').html(JSON.stringify(details, null, '\t'));
+      
+      // Salvar os dados no banco de dados ou verificar se ja existe e carregar dados do usuário.
+      try 
+      {
+        $.ajax({
+          method: "POST",
+          url: 'login_usuario.php',
+          data: {dados: details}
+        })
+        .done(function(data) {
+          debugger;
+            $('#serverData').html(JSON.stringify(data, null, '\t'));
+            alert("Usuario Cadastrado");
+        });
+      }
+      catch (e)
+      {
+        alert("Pagina inexistente");
+      }
+      
+      $('#fb-login').attr('style', 'display:none;');
+    });
+  }
+
+
+  $('#fb-login').click(function(){
+    fbAsyncInit();
+    // Tenta fazer o login
+    FB.login(function(response) { 
+      // Se usuário está logado ....
+      if(response.authResponse) {
+          showDetails();
+      }
+    }, {scope: permissions});
+  });
+
+};
+</script>	
+</body>
+  
+  
+</body>
+</html>
