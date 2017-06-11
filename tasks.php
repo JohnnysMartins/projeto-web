@@ -2,8 +2,8 @@
 <?php
     include_once 'php\TaskService.php';
     session_start();
-    $_SESSION['id'] = $_GET['id'];
-    $_SESSION['name'] = $_GET['name'];
+    $_SESSION['id'] = isset($_GET['id']) ? $_GET['id'] : $_SESSION['id'];
+    $_SESSION['name'] = isset($_GET['name']) ? $_GET['name'] : $_SESSION['name'];
 
     $taskService = new TaskService();    
 ?>
