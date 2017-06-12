@@ -1,0 +1,12 @@
+label{
+    font-family: 'Rock Salt', cursive;
+}
+h1{
+    font-family: 'Bangers', cursive;
+}
+.cabecalho{
+float: right;
+}
+.texto-centro{
+    margin-left: 40%;
+}
