@@ -5,7 +5,13 @@
     $_SESSION['id'] = isset($_GET['id']) ? $_GET['id'] : $_SESSION['id'];
     $_SESSION['name'] = isset($_GET['name']) ? $_GET['name'] : $_SESSION['name'];
 
-    $taskService = new TaskService();    
+    $taskService = new TaskService();
+
+    if (isset($_GET['tarefa']) && isset($_GET['data'])) {
+        $task = new Task($_GET['tarefa'], $_GET['data'], $_SESSION['id']);
+        $taskService->addTarefa($task);
+    }
+  
 ?>
 <html>
     <head>
@@ -16,10 +22,7 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script>
             $(document).ready(function(){
-                $("#add-tarefa").click(function(e){
-                    e.preventDefault();
-                    $("ul").append("<li class='list-group-item'>teste</li>");
-                });
+
             });
         </script>
     </head>
@@ -42,7 +45,7 @@
                     <div class="row"> 
                         <div class="col-md-4"></div>
                         <div class="col-md-8">
-                        <form class="" action=''>
+                        <form class="" action='tasks.php' method='GET'>
                             <div class="form-group">
                                 <label class="control-label" for="tarefa">Tarefa: </label>
                                 <input class="form-control" type="text" name="tarefa">
@@ -63,9 +66,12 @@
                             <div class="panel-heading"><label class="texto-centro">Lista de Tarefas</label></div>
                             <div class="panel-body">
                                 <div>
-                                <ul class="list-group">
-                                <!-- Tarefas adicionadas -->
-                                </ul>
+                                    <ul class="list-group">
+                                    <!-- Tarefas adicionadas -->
+                                    <?php foreach ($taskService->getTasksByUserId($_SESSION['id']) as $task) : ?>
+                                        <li class='list-group-item'><?php echo $task->getTitle()?></li>
+                                    <?php endforeach; ?>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ class TaskService
   }
 
   public function addTarefa($tarefa) {
-    $newTask = $xml->addChild('task', '');
+    $newTask = $this->xml->addChild('task', '');
     $newTask->user = $tarefa->getUser();
     $newTask->title = $tarefa->getTitle();
     $newTask->date = $tarefa->getDate();
