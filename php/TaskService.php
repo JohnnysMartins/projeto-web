@@ -36,7 +36,7 @@ class TaskService
 
     foreach ($this->xml->task as $task) 
       if($task->user == $userId)
-        $tasks[] = $task;
+        $tasks[] = new Task($task->title, $task->date, $task->user);
 
     return $tasks;
   }
