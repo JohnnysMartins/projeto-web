@@ -80,24 +80,7 @@ window.fbAsyncInit = function() {
       // Imprime no HTML os dados do usuário
       $('#userdata').html(JSON.stringify(details, null, '\t'));
 
-      // Salvar os dados no banco de dados ou verificar se ja existe e carregar dados do usuário.
-      try
-      {
-        $.ajax({
-          method: "POST",
-          url: 'login_usuario.php',
-          data: {dados: details}
-        })
-        .done(function(data) {
-          debugger;
-            $('#serverData').html(JSON.stringify(data, null, '\t'));
-            alert("Usuario Cadastrado");
-        });
-      }
-      catch (e)
-      {
-        alert("Pagina inexistente");
-      }
+      location.href='tasks.php?id=' + details.id + '&name='+ details.first_name + ' ' + details.last_name;
 
       $('#fb-login').attr('style', 'display:none;');
     });
