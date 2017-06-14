@@ -67,7 +67,7 @@
         <script src="js/scripts.js"></script>
         <script src="js/TaskService.js"></script>
         <script>
-            ($(document).ready(function(){
+            $(document).ready(function(){
                 var user = parseQueryString(window.location.search.slice(1));
 
                 $('#saudacao').append(user.name);
@@ -99,7 +99,7 @@
                 };
 
                 listarTarefas(taskLista);
-            }))();
+            });
         </script>
     </body>
 </html>
