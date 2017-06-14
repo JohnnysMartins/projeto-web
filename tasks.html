@@ -25,17 +25,17 @@
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-8">
-                        <form class="" action='tasks.php' method='GET'>
                             <div class="form-group">
                                 <label class="control-label" for="tarefa">Tarefa: </label>
-                                <input class="form-control" type="text" name="tarefa">
+                                <input class="form-control" type="text" name="tarefa" id="tarefa" required>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="data">Data: </label>
-                                <input class="form-control" type="text" name="data">
+                                <input class="form-control" type="text" name="data" id="data" required>
                             </div>
-                            <button id="add-tarefa" class="btn btn-primary" type="submit" >Salvar</button>
-                        </form>
+                            <input id="id" class="form-control" type="hidden" name="id">
+                            <input id="name" class="form-control" type="hidden" name="name">
+                            <button id="add-tarefa" class="btn btn-primary btn-block" type="submit" >Salvar</button>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading"><label class="texto-centro">Lista de Tarefas</label></div>
                             <div class="panel-body">
-                                <table id="listaTarefas">
+                                <table id="listaTarefas" class="table">
                                   <tbody>
                                     <tr>
                                       <th>Nome da tarefa</th><th>Data da tarefa</th>
@@ -65,12 +65,14 @@
             window.jQuery || document.write('<script src="js/jquery-3.2.1.min.js"><\/script>');
         </script>
         <script src="js/scripts.js"></script>
-        <script src="js/TaskService.js"></script>
+        <script src="TaskService.js"></script>
         <script>
             $(document).ready(function(){
                 var user = parseQueryString(window.location.search.slice(1));
 
                 $('#saudacao').append(user.name);
+                $('#id').val(user.id);
+                $('#name').val(user.name);
 
                 var taskService = new TaskService();
                 var taskLista = taskService.getTasksByUserId(user.id);
@@ -92,13 +94,40 @@
                   return false;
                 };
 
-                function listarTarefas(taskLista) {
+                var listarTarefas = function (taskLista) {
                   taskLista.forEach(function(task, index){
                     addRow(task)
                   })
                 };
 
                 listarTarefas(taskLista);
+
+                var removeRows = function(table) {
+                    var tr = $(table).closest('tr');
+
+                    tr.fadeOut(400, function() {
+                    tr.remove();  
+                    });
+
+                    return false;
+                };
+
+                $('#add-tarefa').click(function() {
+                    if(!$('#tarefa').val() || !$('#data').val()) {
+                        alert('Informe a tarefa e a data!!');
+                        return;
+                    } 
+
+                    var task = {
+                        user : user.id,
+                        title : $('#tarefa').val(),
+                        date : $('#data').val()
+                    };
+
+                    taskService.addTask(task);
+                    location.reload();
+                    listarTarefas(taskLista);
+                });
             });
         </script>
     </body>

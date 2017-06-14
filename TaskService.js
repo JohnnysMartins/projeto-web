@@ -41,6 +41,23 @@ var TaskService = (function () {
         return tasks;
     };
 
+    TaskService.prototype.removeTask = function (taskName) {
+        var allTasksNames = this.xmlDoc.getElementsByTagName("title");
+
+        for (var i = 0; i < allTasksNames.length; i++)
+            if (allTasksNames[i].childNodes[0].nodeValue == taskName) {
+                var task = {
+                    "user" : allTasksNames[i].childNodes[0].nodeValue,
+                    "title" : this.xmlDoc.getElementsByTagName("title")[i].childNodes[0].nodeValue,
+                    "date" : this.xmlDoc.getElementsByTagName("date")[i].childNodes[0].nodeValue
+                };
+                this.xmlDoc.documentElement.removeChild(this.xmlDoc.getElementsByTagName("task")[i]);
+                break;
+            }
+        this.saveAsFile();
+        return task;
+    };
+
     TaskService.prototype.readXmlFile = function (xmlFile) {
         if(typeof window.DOMParser != "undefined") {
 
@@ -69,7 +86,7 @@ var TaskService = (function () {
         var result = false;
         $.ajax({
             type: "GET",
-            url: "../php/saveXml.php?xml=" + this.getXmlAsString(),
+            url: "saveXml.php?xml=" + this.getXmlAsString(),
             success: function(data){
                 result = true;
             },
@@ -81,5 +98,5 @@ var TaskService = (function () {
     };
     return TaskService;
 }());
-TaskService.XML_FILE = 'xml/tasks.xml';
+TaskService.XML_FILE = 'tasks.xml';
 
