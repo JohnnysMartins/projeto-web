@@ -67,6 +67,8 @@
                 var user = parseQueryString(window.location.search.slice(1));
                 
                 $('#saudacao').append(user.name);
+                
+                var taskService = new TaskService();
 
             }))();
         </script>
