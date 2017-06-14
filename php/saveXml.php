@@ -1,3 +1,3 @@
 <?php 
-file_put_contents('tasks.xml', $_GET['xml']);
+file_put_contents('../xml/tasks.xml', $_GET['xml']);
 ?>

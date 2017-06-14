@@ -81,5 +81,5 @@ var TaskService = (function () {
     };
     return TaskService;
 }());
-TaskService.XML_FILE = 'task.xml';
+TaskService.XML_FILE = '../xml/tasks.xml';
 
