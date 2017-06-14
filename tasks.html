@@ -45,7 +45,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading"><label class="texto-centro">Lista de Tarefas</label></div>
                             <div class="panel-body">
-                                <table>
+                                <table id="listaTarefas">
                                   <tbody>
                                     <tr>
                                       <th>Nome da tarefa</th><th>Data da tarefa</th>
@@ -73,7 +73,7 @@
                 $('#saudacao').append(user.name);
 
                 var taskService = new TaskService();
-                var taskLista = taskService.getTasksByUserId(1);
+                var taskLista = taskService.getTasksByUserId(user.id);
 
                 var addRow = function(task) {
 
@@ -87,7 +87,7 @@
                   cols += '</td>';
 
                   newRow.append(cols);
-                  $("#products-table").append(newRow);
+                  $("#listaTarefas").append(newRow);
 
                   return false;
                 };
